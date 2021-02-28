@@ -22,7 +22,7 @@ interface Metadata  {
 
 type OnUpdateCallback = (metadata: Metadata) => void;
 
-interface InputByType {
+export interface InputByType {
     base64: string;
     string: string;
     text: string;
@@ -56,7 +56,7 @@ interface OutputByType {
 //     compressedContent: string|ArrayBuffer|Uint8Array|Buffer;
 // }
 
-type InputFileFormat = InputByType[keyof InputByType];
+type InputFileFormat = InputByType[keyof InputByType] | Promise<InputFileFormat>;
 
 declare namespace JSZip {
     type InputType = keyof InputByType;
@@ -245,15 +245,7 @@ interface JSZip {
     /**
      * Create JSZip instance
      */
-
-    /**
-     * Create JSZip instance
-     * If no parameters given an empty zip archive will be created
-     *
-     * @param data Serialized zip archive
-     * @param options Description of the serialized zip archive
-     */
-    new (data?: InputFileFormat, options?: JSZip.JSZipLoadOptions): this;
+    new(): this;
 
     (): JSZip;
 
